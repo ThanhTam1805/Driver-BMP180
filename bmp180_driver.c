@@ -139,12 +139,11 @@ static long readPressure(uint8_t oss)
     return result;
 }
 
-/* Hàm in thông số calibration */
+// In giá trị cal
 static void bmp180_print_calibration_data(void)
 {
     printk(KERN_INFO "BMP180 Calibration Data:\n");
     
-    /* In các giá trị signed short (2 bytes) */
     printk(KERN_INFO "AC1: %hd\n", AC1);
     printk(KERN_INFO "AC2: %hd\n", AC2);
     printk(KERN_INFO "AC3: %hd\n", AC3);
@@ -153,13 +152,9 @@ static void bmp180_print_calibration_data(void)
     printk(KERN_INFO "MB: %hd\n", MB);
     printk(KERN_INFO "MC: %hd\n", MC);
     printk(KERN_INFO "MD: %hd\n", MD);
-    
-    /* In các giá trị unsigned short (2 bytes) */
     printk(KERN_INFO "AC4: %hu\n", AC4);
     printk(KERN_INFO "AC5: %hu\n", AC5);
     printk(KERN_INFO "AC6: %hu\n", AC6);
-    
-    /* In giá trị long (B5) */
     printk(KERN_INFO "B5: %ld\n", B5);
 }
 static int bmp180_open(struct inode *inode, struct file *file)
