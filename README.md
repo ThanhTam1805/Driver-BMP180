@@ -73,7 +73,7 @@ Thuật toán hiệu chuẩn: Sử dụng 11 tham số hiệu chuẩn (AC1–AC6
 
 | BMP180 Pin | Raspberry Pi 4 Pin                   | Ghi chú                   |
 | ---------- | ------------------------------------ | ------------------------- |
-| **VIN**    | **Pin 1 (3.3V)** hoặc **Pin 2 (5V)** | Cảm biến chấp nhận 3.3–5V |
+| **VIN**    | **Pin 1 (3.3V)**                     | Cảm biến chấp nhận 3.3    |
 | **GND**    | **Pin 6 (GND)**                      | Nối đất                   |
 | **SCL**    | **Pin 5 (GPIO3 / SCL)**              | Dữ liệu clock I2C         |
 | **SDA**    | **Pin 3 (GPIO2 / SDA)**              | Dữ liệu I2C               |
