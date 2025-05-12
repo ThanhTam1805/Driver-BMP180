@@ -37,7 +37,13 @@ int main() {
     }
     printf("Temperature: %.1f °C\n", temperature / 10.0);
 
-    // Đọc áp suất với oversampling setting = 3 (độ chính xác cao nhất)
+    // Đọc áp suất với oversampling setting = 3 (độ chính xác cao// Giá trị oversampling setting là giá trị setting cho độ chính xác của áp suất
+    // oss có thể là 0, 1, 2 hoặc 3
+    // oss = 0: Độ chính xác thấp nhất (đọc 1 lần)
+    // oss = 1: Độ chính xác trung bình (đọc 2 lần)
+    // oss = 2: Độ chính xác cao (đọc 4 lần)
+    // oss = 3: Độ chính xác cao nhất (đọc 8 lần)
+    // Đọc áp suất với oversampling setting = 3 (độ chính xác cao nhất) nhất)
     pressure_data.oss = 0;
     if (ioctl(fd, IOCTL_READ_PRESSURE, &pressure_data) < 0) {
         perror("Failed to read pressure");
