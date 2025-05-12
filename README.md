@@ -89,8 +89,7 @@ Kiểm tra kết nối i2cdetect -y 1 -> Nếu hiện 0x77 thì đẫ kết nố
 B1: Tải cái file bmp180_driver.c bmp180.dts Makefile test.c tại trang Github https://github.com/ThanhTam1805/Driver-BMP180
 vào cùng 1 thư mục trên Raspberry Pi
 B2: Mở Terminal chuyển đến thư mục chứa các file đã tải chạy lệnh Make -> sau đó chạy lệnh sudo cp bmp180.dtbo /boot/overlays/ -> chạy lệnh sudo nano /boot/config.txt
-  thêm dòng sau vào file config.txt dtoverlay=bmp180 -> sau đó chạy lệnh sudo reboot
-B3: Mở Terminal chạy lệnh make 
+  thêm dòng sau vào file config.txt dtoverlay=bmp180 -> sau đó chạy lệnh sudo reboot 
 
 3.4 Cài đặt Driver BMP180 
 B1: Mở Terminal chuyển đến thư mục chứa các file đã tải chạy lệnh sudo insmod bmp180_driver.ko
