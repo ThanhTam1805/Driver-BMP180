@@ -10,7 +10,8 @@ Driver BMP 180 sensor for Linux Kernel space on Raspberry Pi 4B
                                                 2. Thông số kỹ thuật của BMP 180
                                                 3. Cài đặt & Biên dịch
                                                 4. Kiểm tra hoạt động của Driver
-                                                5. Tác giả 
+                                                5. Các hàm cần thiết 
+                                                6. Tác giả và Demo
 
 
 //=====================================================================================================================  
@@ -108,8 +109,78 @@ B2: Chạy lệnh sudo ./bmp180_test
     Temperature: 37.9 °C
     Pressure: 118267.00 Pa
 
+//=====================================================================================================================  
+//                                     5. Các hàm cần thiết
+//=====================================================================================================================
+
+Đoạn mã sử dụng 3 hàm chính dùng để giao tiếp giữ lớp User pasce và Kernel space như:
+*** Hàm open(): dùng để device file
+- Cú pháp:
+  int open(const char *pathname, int flags);
+  int open(const char *pathname, int flags, mode_t mode);
+- Các đối số của hàm:
+  1. pathname
+    Đường dẫn đến file bạn muốn mở.
+    Ví dụ ở đây là file device ở dưới lớp Kernel: "/dev/bmp180" 
+  2. flags — Cờ mở file
+  Chỉ định hành vi mở file ở các dạng như (đọc, ghi, tạo mới, v.v.)
+    Một số cờ phổ biến:
+    Flag	Ý nghĩa
+    O_RDONLY	Mở chỉ để đọc
+    O_WRONLY	Mở chỉ để ghi
+    O_RDWR	Mở để đọc và ghi
+    O_CREAT	Tạo file nếu chưa tồn tại (cần thêm đối số mode)
+    O_TRUNC	Xóa nội dung cũ (nếu mở để ghi)
+    O_APPEND	Ghi nối vào cuối file
+Ta có thể kết hợp nhiều cờ bằng toán tử |.
+  Ví dụ: O_RDWR | O_CREAT
+  3. mode (tùy chọn)
+  Chỉ dùng nếu có O_CREAT.Xác định quyền truy cập file nếu nó được tạo mới
+
+fd = open("/dev/bmp180", O_RDWR); // Đọc ghi giá trị hoặc ghi giá trị. Nếu có lỗi (driver chưa được tải hoặc không tồn 
+tại) thì hàm này sẽ trả về giá trị < 0. 
+*** Hàm ioctl(): dùng để gọi(gửi những lệnh cần thiết) từ lớp User space xuống lớp Kernel. Thường dùng để đọc/ghi các giá 
+trị cần thiết
+- Cú pháp
+  int ioctl(int fd, unsigned long request, arg);
+- Các đối số của hàm:
+| Tham số          | Ý nghĩa                                                           |
+| ---------------- | ----------------------------------------------------------------- |
+| `fd`             | File descriptor đã mở bằng `open()` (ví dụ: `/dev/bmp180`)        |
+| `request`        | Mã lệnh IOCTL, xác định hành động muốn thực hiện                  |
+| `arg` (tùy chọn) | Địa chỉ đến vùng nhớ dữ liệu (có thể là struct, long, pointer...) |
+- Các Macro thường dùng trong ioctl
+| Macro                            | Ý nghĩa                                          |
+| -------------------------------- | ------------------------------------------------ |
+| `_IOR(type, number, data_type)`  | **Đọc** dữ liệu từ kernel-space về user-space    |
+| `_IOW(type, number, data_type)`  | **Ghi** dữ liệu từ user-space xuống kernel-space |
+| `_IOWR(type, number, data_type)` | **Ghi và đọc** dữ liệu (2 chiều)                 |
+| `_IO(type, number)`              | Không truyền dữ liệu                             |
+- Trong ví dụ về mã tôi đã sử lệnh _IOR cho việc đọc dữ liệu là nhiệt độ và lệnh _IOWR cho việc ghi thông số
+oss (độ chính xác) và đọc áp giá trị áp suất cho lớp Kernel.
+        ioctl(fd, IOCTL_READ_TEMP, &temperature);
+        ioctl(fd, IOCTL_READ_PRESSURE, &pressure_data)
+- Ngoài ra tôi còn sử dụng các hàm in thông báo perror() và hàm đống file close()
+- Cú pháp:
+            void perror(const char *msg);
+            int close(int fd);
+  - Lưu ý: Bạn có thể không sử dụng hàm perror() nhưng bắt buộc phải sử dụng hàm close() để đảm bảo đóng file khi
+    sử dụng xong.
+ ###NOTE: Các trị trả về như temperature và pressure từ hàm ioctl bạn có thể sử dụng để điều khiển thiết bị hoặc thông báo
+           tùy ứng dụng mà bạn có thể phát triển thêm tùy theo dự án của mình!!!. Chúc bạn thành công
 
 
+    
+//=====================================================================================================================  
+//                                     6. Tác giả 
+//=====================================================================================================================
+
+### Driver BMP180 version 1.0  được phát triển bởi các tác giả sau:
+- Lê Nguyễn Thành Tâm      22146214
+- Nguyễn Chí Bình
+- Võ Phước Thắng 
+### Driver BMP180 sử dụng tài liệu Bosch. Bạn có thể truy cập tại địa chỉ sau: https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
+### Clip demo của Driver bạn có thể truy cập Youtube tại địa chỉ: 
 
 //=====================================================================================================================  
 //                                              !!! NOTE NOTE NOTE !!!
@@ -129,6 +200,8 @@ B2: Chạy lệnh
     sudo rmmod bmp280_i2c  
     sudo rmmod bmp280      
 B3: Tiến hành gỡ cài đặt Driver BMP180 (xem ở mục 3.4) và thực hiện lại các bước Mục 3.4
+
+
 
 
 
