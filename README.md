@@ -176,8 +176,8 @@ oss (độ chính xác) và đọc áp giá trị áp suất cho lớp Kernel.
 
 ### Driver BMP180 version 1.0  được phát triển bởi các tác giả sau:
 - Lê Nguyễn Thành Tâm      22146214
-- Nguyễn Chí Bình
-- Võ Phước Thắng 
+- Nguyễn Chí Bình          22146084
+- Võ Phước Thắng           22146229
 ### Driver BMP180 sử dụng tài liệu Bosch. Bạn có thể truy cập tại địa chỉ sau: https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
 ### Clip demo của Driver bạn có thể truy cập Youtube tại địa chỉ: https://youtu.be/ZMpUF-4gxYI
 
