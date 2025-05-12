@@ -180,7 +180,7 @@ oss (độ chính xác) và đọc áp giá trị áp suất cho lớp Kernel.
 - Nguyễn Chí Bình
 - Võ Phước Thắng 
 ### Driver BMP180 sử dụng tài liệu Bosch. Bạn có thể truy cập tại địa chỉ sau: https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
-### Clip demo của Driver bạn có thể truy cập Youtube tại địa chỉ: 
+### Clip demo của Driver bạn có thể truy cập Youtube tại địa chỉ: https://youtu.be/ZMpUF-4gxYI
 
 //=====================================================================================================================  
 //                                              !!! NOTE NOTE NOTE !!!
