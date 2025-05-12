@@ -44,7 +44,7 @@ int main() {
     // oss = 2: Độ chính xác cao (đọc 4 lần)
     // oss = 3: Độ chính xác cao nhất (đọc 8 lần)
     // Đọc áp suất với oversampling setting = 3 (độ chính xác cao nhất) nhất)
-    pressure_data.oss = 0;
+    pressure_data.oss = 0;  // Có thể thay đổi giá trị oss ở đây
     if (ioctl(fd, IOCTL_READ_PRESSURE, &pressure_data) < 0) {
         perror("Failed to read pressure");
         close(fd);
